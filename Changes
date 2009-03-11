@@ -1,0 +1,37 @@
+minismokebox
+============
+
+0.16	Sun Feb 22 21:32:38 GMT 2009
+	- Specify the POE::Loop::Event dependency explicitly 
+	  if the user wants Event.
+
+0.14	Fri Feb  6 12:27:53 GMT 2009
+	- Fixed refcount leaks. 
+	- Updated dependencies to fixed versions.
+
+0.12	Mon Feb  2 22:12:15 GMT 2009
+	- Added some more env vars that needed setting.
+
+0.10	Mon Feb  2 13:14:06 GMT 2009
+	- Always set AUTOMATED_TESTING env var. Some backends
+	  don't set it, so we must. *sigh*
+
+0.08	Thu Jan 29 21:16:38 GMT 2009
+	- added --reverse option 
+	- Improved tests
+	- Refined Makefile.PL
+
+0.06	Tue Jan 13 21:04:40 GMT 2009
+	- Fixed META.yml, abstract was wrong.
+
+0.04	Mon Jan 12 16:20:11 GMT 2009
+	- Print out the options we are going to use
+
+0.02	Mon Jan 12 09:48:15 GMT 2009
+	- Initial CPAN 'stable' release
+
+0.01_02	Sat Jan 10 22:47:01 GMT 2009
+	- Slight issue with commandline options. Fixed.
+
+0.01_01	Sat Jan 10 22:09:09 GMT 2009
+	- Initial CPAN developer release

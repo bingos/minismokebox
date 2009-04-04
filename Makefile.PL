@@ -44,4 +44,5 @@ if ( $prompt =~ /^Y/i ) {
 
 }
 clean_files '.smokebox jobs.txt';
+auto_set_repository;
 WriteAll();

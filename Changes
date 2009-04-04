@@ -1,6 +1,10 @@
 minismokebox
 ============
 
+0.18	Sat Apr  4 22:14:12 BST 2009
+	- Changed the default CPAN mirror used to the CPAN Testers mirror
+	- Added repository META.
+
 0.16	Sun Feb 22 21:32:38 GMT 2009
 	- Specify the POE::Loop::Event dependency explicitly 
 	  if the user wants Event.

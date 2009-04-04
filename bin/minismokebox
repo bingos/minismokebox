@@ -29,7 +29,7 @@ minismokebox - a small lightweight SmokeBox
    --package PATTERN - specify a search pattern to match against distributions;
    --phalanx	     - smoke the Phalanx 100 distributions;
    --reverse	     - specify that RECENT uploads are smoked in reverse order;
-   --url URI	     - The URI of a CPAN mirror to use, default is Funet FTP;
+   --url URI	     - The URI of a CPAN mirror to use, default is CPAN Testers FTP;
 
 =head1 DESCRIPTION
 

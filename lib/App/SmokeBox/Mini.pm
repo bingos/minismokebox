@@ -17,9 +17,9 @@ use POE::Component::SmokeBox::Recent;
 
 use vars qw($VERSION);
 
-use constant CPANURL => 'ftp://ftp.funet.fi/pub/CPAN/';
+use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.16';
+$VERSION = '0.18';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -83,19 +83,19 @@ sub run {
   my %config = _read_config();
   my $version;
   GetOptions(
-    "h|help"      => sub { pod2usage(1); },
-    "v|version"   => sub { $version = 1 },
-    "d|debug"     => \$config{debug},
-    "p|perl=s" 	  => \$config{perl},
-    "i|indices"   => \$config{indices},
-    "r|recent"    => \$config{recent},
-    "j|jobs=s"    => \$config{jobs},
-    "b|backend=s" => \$config{backend},
-    "a|author=s"  => \$config{author},
-    "D|package=s" => \$config{package},
-    "P|phalanx"   => \$config{phalanx},
-    "u|url=s"	  => \$config{url},
-    "R|reverse"   => \$config{reverse},
+    "help"      => sub { pod2usage(1); },
+    "version"   => sub { $version = 1 },
+    "debug"     => \$config{debug},
+    "perl=s" 	  => \$config{perl},
+    "indices"   => \$config{indices},
+    "recent"    => \$config{recent},
+    "jobs=s"    => \$config{jobs},
+    "backend=s" => \$config{backend},
+    "author=s"  => \$config{author},
+    "package=s" => \$config{package},
+    "phalanx"   => \$config{phalanx},
+    "url=s"	  => \$config{url},
+    "reverse"   => \$config{reverse},
   ) or pod2usage(2);
 
   _display_version() if $version;

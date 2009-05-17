@@ -6,6 +6,7 @@ version_from 'lib/App/SmokeBox/Mini.pm';
 abstract_from 'bin/minismokebox';
 install_script 'bin/minismokebox';
 license 'perl';
+auto_license holder => 'Chris Williams';
 perl_version '5.006';
 build_requires 'Test::More' => 0.47;
 build_requires 'Test::POE::Server::TCP' => 0.12;
@@ -45,5 +46,5 @@ if ( $prompt =~ /^Y/i ) {
 
 }
 clean_files '.smokebox jobs.txt';
-eval "auto_set_repository";
+githubmeta;
 WriteAll();

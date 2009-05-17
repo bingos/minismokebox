@@ -16,10 +16,11 @@ requires 'Config::Tiny' => 2.12;
 requires 'File::Spec' => 0;
 requires 'Pod::Usage' => '1.00';
 requires 'Time::Duration' => 1.06;
-requires 'POE' => 1.0001;
+requires 'POE' => 1.005;
 requires 'POE::Component::SmokeBox' => 0.14;
 requires 'POE::Component::SmokeBox::Recent' => 1.12;
 requires 'POE::Component::SmokeBox::Dists' => 0.08;
+requires 'Module::Pluggable' => 0;
 if ( !( can_use('Event') and can_use('POE::XS::Queue::Array') ) and can_cc() ) {
 print <<NOTICE;
 
@@ -44,5 +45,5 @@ if ( $prompt =~ /^Y/i ) {
 
 }
 clean_files '.smokebox jobs.txt';
-auto_set_repository;
+eval "auto_set_repository";
 WriteAll();

@@ -5,6 +5,7 @@ use warnings;
 use Pod::Usage;
 use Config::Tiny;
 use File::Spec;
+use File::Path qw[mkpath];
 use Cwd;
 use Getopt::Long;
 use Time::Duration qw(duration_exact);
@@ -47,7 +48,7 @@ sub _read_config {
   my $Config = Config::Tiny->read( $conf_file );
   if ( defined $Config->{_} ) {
 	return map { $_, $Config->{_}->{$_} } grep { exists $Config->{_}->{$_} }
-		qw(debug perl indices recent backend url);
+		qw(debug perl indices recent backend url home);
   }
   return;
 }
@@ -94,8 +95,9 @@ sub run {
     "author=s"  => \$config{author},
     "package=s" => \$config{package},
     "phalanx"   => \$config{phalanx},
-    "url=s"	  => \$config{url},
+    "url=s"	    => \$config{url},
     "reverse"   => \$config{reverse},
+    "home=s"    => \$config{home},
   ) or pod2usage(2);
 
   _display_version() if $version;
@@ -113,7 +115,16 @@ sub run {
 
   print "Running minismokebox with options:\n";
   printf("%-20s %s\n", $_, $config{$_}) 
-	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url);
+	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home);
+
+  if ( $config{home} and ! -e $config{home} ) {
+     mkpath( $config{home} ) or die "Could not create '$config{home}': $!\n";
+  }
+
+  if ( $config{home} and ! -d $config{home} ) {
+     warn "Home option was specified but '$config{home}' is not a directory, ignoring\n";
+     delete $config{home};
+  }
 
   my $self = bless \%config, $package;
 
@@ -121,6 +132,7 @@ sub run {
 	smokers => [
 	   POE::Component::SmokeBox::Smoker->new(
 		perl => $self->{perl},
+    ( $self->{home} ? ( env => { HOME => $self->{home} } ) : () ),
 	   ),
 	],
   );

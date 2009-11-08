@@ -15,6 +15,7 @@ build_requires 'HTTP::Response' => 0;
 build_requires 'HTTP::Date' => 0;
 requires 'Config::Tiny' => 2.12;
 requires 'File::Spec' => 0;
+requires 'File::Path' => 0;
 requires 'Pod::Usage' => '1.00';
 requires 'Time::Duration' => 1.06;
 requires 'POE' => 1.005;
@@ -46,5 +47,6 @@ if ( $prompt =~ /^Y/i ) {
 
 }
 clean_files '.smokebox jobs.txt';
+auto_provides;
 githubmeta;
 WriteAll();

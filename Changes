@@ -1,6 +1,11 @@
 minismokebox
 ============
 
+0.20  Sun Nov  8 14:51:02 GMT 2009 
+  - Changes to Makefile.PL
+  - Added 'home' option to change HOME env var for spawned
+    processes.
+
 0.18	Sat Apr  4 22:14:12 BST 2009
 	- Changed the default CPAN mirror used to the CPAN Testers mirror
 	- Added repository META.

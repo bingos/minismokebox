@@ -30,6 +30,7 @@ minismokebox - a small lightweight SmokeBox
    --phalanx	     - smoke the Phalanx 100 distributions;
    --reverse	     - specify that RECENT uploads are smoked in reverse order;
    --url URI	     - The URI of a CPAN mirror to use, default is CPAN Testers FTP;
+   --home DIR       - Set a fake HOME directory for spawned smokers to use;
 
 =head1 DESCRIPTION
 
@@ -127,6 +128,11 @@ Indicates that C<minismokebox> should reindex the particular backend before proc
 The URI of a CPAN Mirror that C<minismokebox> will use to obtain the recent uploads from or perform C<package>, 
 C<author> and C<phalanx> searches against. For consistency this should really match the CPAN Mirror configured in
 the applicable backend you are using.
+
+=item C<--home DIR>
+
+The path to a directory that will become the C<HOME> environment variable in spawned smoke processes. It will be
+created if it does not exist.
 
 =back
 
@@ -232,6 +238,11 @@ C<author> and C<phalanx> searches against. For consistency this should really ma
 the applicable backend you are using.
 
   url=http://www.cpan.org/
+
+=item C<home>
+
+The path to a directory that will become the C<HOME> environment variable in spawned smoke processes. It will be
+created if it does not exist.
 
 =back
 

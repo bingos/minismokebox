@@ -37,9 +37,4 @@ The recommended method of installation as always is to use either CPAN or CPANPL
 so that the dependencies are automagically dealt with for you and you have the option
 of sending test reports during installation >:)
 
-Status:
-=======
-
-Currently a testing release. Feel free to have a look, try it out, etc.
-
 Any bug reports, feature requests, send an email to bug-minismokebox@rt.cpan.org

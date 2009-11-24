@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 7;
+use Test::More tests => 10;
 use App::SmokeBox::Mini;
 use File::Spec;
 use Cwd;
@@ -20,6 +20,8 @@ backend=CPAN::YACSmoke
 recent=1
 indices=1
 wtf=1
+[IRC]
+test=value
 EOF
 close CONFIG;
 
@@ -32,3 +34,6 @@ ok( !$config{wtf},    'No wtf flag, good' );
 ok( $config{backend} eq 'CPAN::YACSmoke', 'Backend defined' );
 ok( $config{url} eq 'http://www.cpan.org/', 'URL defined' );
 ok( $config{perl} eq '/MADE/UP/PATH/TO/perl', 'perl defined' );
+ok( $config{sections}, 'There is a sections' );
+ok( $config{sections}->{IRC}, 'And an IRC section' );
+is( $config{sections}->{IRC}->{test}, 'value', 'And there is an IRC test value');

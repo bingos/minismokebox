@@ -9,6 +9,8 @@ use File::Path qw[mkpath];
 use Cwd;
 use Getopt::Long;
 use Time::Duration qw(duration_exact);
+use Module::Pluggable search_path => ['App::SmokeBox::Mini::Plugin'];
+use Module::Load;
 use POE;
 use POE::Component::SmokeBox;
 use POE::Component::SmokeBox::Smoker;
@@ -20,7 +22,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.20';
+$VERSION = '0.21_01';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -46,11 +48,14 @@ sub _read_config {
   my $conf_file = File::Spec->catfile( $smokebox_dir, 'minismokebox' );
   return unless -e $conf_file;
   my $Config = Config::Tiny->read( $conf_file );
+  my @config;
   if ( defined $Config->{_} ) {
-	return map { $_, $Config->{_}->{$_} } grep { exists $Config->{_}->{$_} }
-		qw(debug perl indices recent backend url home);
+    my $root = delete $Config->{_};
+	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
+		              qw(debug perl indices recent backend url home);
   }
-  return;
+  push @config, 'sections', $Config if scalar keys %{ $Config };
+  return @config;
 }
 
 sub _get_jobs_from_file {
@@ -140,7 +145,7 @@ sub run {
   $self->{session_id} = POE::Session->create(
 	object_states => [
 	   $self => { recent => '_submission', dists => '_submission', },
-	   $self => [qw(_start _stop _check _indices _smoke _search)],
+	   $self => [qw(_start _stop _check _child _indices _smoke _search)],
 	],
 	heap => $self,
   )->ID();
@@ -169,6 +174,19 @@ sub _start {
 	idle => 0,
 	excess => 0,
   };
+  # Initialise plugins
+  foreach my $plugin ( $self->plugins() ) {
+     load $plugin;
+     $plugin->init( $self->{sections} );
+  }
+  return;
+}
+
+sub _child {
+  my ($kernel,$self,$reason,$child) = @_[KERNEL,OBJECT,ARG0,ARG1];
+  return unless $reason eq 'create';
+  push @{ $self->{_sessions} }, $child->ID();
+  $kernel->detach_child( $child );
   return;
 }
 
@@ -188,6 +206,7 @@ sub _stop {
   print "minismokebox avg run: \t", $stats[3], "\n";
   print "minismokebox min run: \t", $stats[4], "\n";
   print "minismokebox max run: \t", $stats[5], "\n";
+  $kernel->call( $_, 'sbox_stop', @stats ) for @{ $self->{_sessions} };
   return;
 }
 
@@ -302,6 +321,7 @@ sub _smoke {
   my $dist = $data->{job}->module();
   my ($result) = $data->{result}->results;
   print "Distribution: '$dist' finished with status '$result->{status}'\n";
+  $kernel->post( $_, 'sbox_smoke', $data ) for @{ $self->{_sessions} };
   my $run_time = $result->{end_time} - $result->{start_time};
   $self->{stats}->{max_run} = $run_time if $run_time > $self->{stats}->{max_run};
   $self->{stats}->{min_run} = $run_time if $self->{stats}->{min_run} == 0;

@@ -13,6 +13,7 @@ inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/App/SmokeBox/Mini.pm
+lib/App/SmokeBox/Mini/Plugin.pm
 lib/POE/Component/SmokeBox/Backend/Test/SmokeBox/Mini.pm
 LICENSE
 Makefile.PL
@@ -26,5 +27,7 @@ t/03_jobs_file.t
 t/04_run.t
 t/05_minismokebox.t
 t/06_xobekomsinim.t
+t/07_plugins.t
 t/99_pod.t
 t/99_pod_coverage.t
+t/lib/App/SmokeBox/Mini/Plugin/Test.pm

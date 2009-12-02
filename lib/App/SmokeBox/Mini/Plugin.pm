@@ -3,7 +3,7 @@ package App::SmokeBox::Mini::Plugin;
 use strict;
 use warnings;
 
-our $VERSION = '0.21_01';
+our $VERSION = '0.22';
 
 qq[Smokin' plugins];
 
@@ -50,7 +50,42 @@ session ID which it will use to send the following events.
 
 =item C<sbox_smoke>
 
+Sent on process completion with a hashref as C<ARG0>:
+
+  'job', the POE::Component::SmokeBox::Job object of the job;
+  'result', a POE::Component::SmokeBox::Result object containing the results;
+  'submitted', the epoch time in seconds when the job was submitted;
+
+The results will be same as returned by L<POE::Component::SmokeBox::Backend>. They may be obtained by querying the
+L<POE::Component::SmokeBox::Result> object:
+
+  $_[ARG0]->{result}->results() # produces a list
+
+Each result is a hashref:
+
+  'log', an arrayref of STDOUT and STDERR produced by the job;
+  'PID', the process ID of the POE::Wheel::Run;
+  'status', the $? of the process;
+  'start_time', the time in epoch seconds when the job started running;
+  'end_time', the time in epoch seconds when the job finished;
+  'idle_kill', only present if the job was killed because of excessive idle;
+  'excess_kill', only present if the job was killed due to excessive runtime;
+  'term_kill', only present if the job was killed due to a poco shutdown event;
+
+
 =item C<sbox_stop>
+
+Sent when the smokebox is terminating. Your plugin session should terminate after receiving this 
+event. The following data will be passed:
+
+  ARG0, the start time of the smoke process in epoch time;
+  ARG1, the finish time of the smoke process in epoch time;
+  ARG2, the total number of jobs processed;
+  ARG3, the number of jobs killed for being idle;
+  ARG4, the number of jobs killed for running over the excess time;
+  ARG5, the average job runtime in seconds;
+  ARG6, the minimum job runtime in seconds;
+  ARG7, the maximum job runtime in seconds;
 
 =back
 

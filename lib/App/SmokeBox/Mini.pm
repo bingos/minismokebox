@@ -22,7 +22,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.21_01';
+$VERSION = '0.22';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -196,6 +196,7 @@ sub _stop {
   my $finish = time();
   my $cumulative = duration_exact( $finish - $self->{stats}->{started} );
   my @stats = map { $self->{stats}->{$_} } qw(totaljobs idle excess avg_run min_run max_run);
+  $kernel->call( $_, 'sbox_stop', $self->{stats}->{started}, $finish, @stats ) for @{ $self->{_sessions} };
   $stats[$_] = duration_exact( $stats[$_] ) for 3 .. 5;
   print "minismokebox started at: \t", scalar localtime($self->{stats}->{started}), "\n";
   print "minismokebox finished at: \t", scalar localtime($finish), "\n";
@@ -206,7 +207,6 @@ sub _stop {
   print "minismokebox avg run: \t", $stats[3], "\n";
   print "minismokebox min run: \t", $stats[4], "\n";
   print "minismokebox max run: \t", $stats[5], "\n";
-  $kernel->call( $_, 'sbox_stop', @stats ) for @{ $self->{_sessions} };
   return;
 }
 

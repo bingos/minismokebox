@@ -26,7 +26,7 @@ sub _start {
 
 sub sbox_stop {
   my ($kernel,$session,@stats) = @_[KERNEL,SESSION,ARG0..$#_];
-  is( scalar @stats, 6, 'Got the right number of stats entries' );
+  is( scalar @stats, 8, 'Got the right number of stats entries' );
   $kernel->refcount_decrement( $session->ID, __PACKAGE__ );
   return;
 }

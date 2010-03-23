@@ -22,7 +22,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.24';
+$VERSION = '0.26';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -52,7 +52,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug perl indices recent backend url home);
+		              qw(debug perl indices recent backend url home nolog);
   }
   push @config, 'sections', $Config if scalar keys %{ $Config };
   return @config;
@@ -121,7 +121,7 @@ sub run {
 
   print "Running minismokebox with options:\n";
   printf("%-20s %s\n", $_, $config{$_}) 
-	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home);
+	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home nolog);
 
   if ( $config{home} and ! -e $config{home} ) {
      mkpath( $config{home} ) or die "Could not create '$config{home}': $!\n";

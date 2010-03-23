@@ -1,6 +1,9 @@
 minismokebox
 ============
 
+0.26  Tue Mar 23 16:30:47 GMT 2010
+  - Actually activate the --nolog option
+
 0.24  Tue Mar 23 12:59:05 GMT 2010
   - added --nolog option
 

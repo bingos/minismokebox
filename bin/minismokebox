@@ -31,6 +31,7 @@ minismokebox - a small lightweight SmokeBox
    --reverse	     - specify that RECENT uploads are smoked in reverse order;
    --url URI	     - The URI of a CPAN mirror to use, default is CPAN Testers FTP;
    --home DIR       - Set a fake HOME directory for spawned smokers to use;
+   --nolog          - Set to disable stdout/stderr logging in jobs;
 
 =head1 DESCRIPTION
 
@@ -133,6 +134,10 @@ the applicable backend you are using.
 
 The path to a directory that will become the C<HOME> environment variable in spawned smoke processes. It will be
 created if it does not exist.
+
+=item C<--nolog>
+
+If enabled the C<STDOUT> and C<STDERR> of job output will not be logged.
 
 =back
 

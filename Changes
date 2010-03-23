@@ -1,6 +1,9 @@
 minismokebox
 ============
 
+0.24  Tue Mar 23 12:59:05 GMT 2010
+  - added --nolog option
+
 0.22  Wed Dec  2 13:54:03 GMT 2009
   - Minor fixes to plugin
 

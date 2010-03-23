@@ -22,7 +22,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.22';
+$VERSION = '0.24';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -103,6 +103,7 @@ sub run {
     "url=s"	    => \$config{url},
     "reverse"   => \$config{reverse},
     "home=s"    => \$config{home},
+    "nolog"     => \$config{nolog},
   ) or pod2usage(2);
 
   _display_version() if $version;
@@ -253,6 +254,7 @@ sub _search {
 	      ( $self->{backend} ? ( type => $self->{backend} ) : () ),
 	      command => 'smoke',
 	      module  => $distro,
+        ( $self->{nolog} ? ( no_log => 1 ) : () ),
            ),
         );
      }
@@ -310,6 +312,7 @@ sub _submission {
 	   ( $self->{backend} ? ( type => $self->{backend} ) : () ),
 	   command => 'smoke',
 	   module  => $distro,
+     ( $self->{nolog} ? ( no_log => 1 ) : () ),
         ),
      );
   }

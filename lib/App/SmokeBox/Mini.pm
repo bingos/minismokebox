@@ -11,7 +11,10 @@ use Getopt::Long;
 use Time::Duration qw(duration_exact);
 use Module::Pluggable search_path => ['App::SmokeBox::Mini::Plugin'];
 use Module::Load;
-use POE;
+BEGIN {
+  sub POE::Kernel::USE_SIGCHLD () { 1 }
+  use POE;
+}
 use POE::Component::SmokeBox;
 use POE::Component::SmokeBox::Smoker;
 use POE::Component::SmokeBox::Job;

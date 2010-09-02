@@ -1,6 +1,9 @@
 minismokebox
 ============
 
+0.30 Thu Sep  2 15:44:20 BST 2010
+  - Added --rss option
+
 0.26  Tue Mar 23 16:30:47 GMT 2010
   - Actually activate the --nolog option
 

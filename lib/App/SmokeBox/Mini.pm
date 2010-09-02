@@ -25,7 +25,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.28';
+$VERSION = '0.30';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -55,7 +55,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug perl indices recent backend url home nolog);
+		              qw(debug perl indices recent backend url home nolog rss);
   }
   push @config, 'sections', $Config if scalar keys %{ $Config };
   return @config;
@@ -107,6 +107,7 @@ sub run {
     "reverse"   => \$config{reverse},
     "home=s"    => \$config{home},
     "nolog"     => \$config{nolog},
+    "rss"       => \$config{rss},
   ) or pod2usage(2);
 
   _display_version() if $version;
@@ -266,6 +267,7 @@ sub _search {
     POE::Component::SmokeBox::Recent->recent( 
         url => $self->{url} || CPANURL,
         event => 'recent',
+        rss => $self->{rss},
     );
   }
   if ( $self->{package} ) {
@@ -295,6 +297,7 @@ sub _search {
   POE::Component::SmokeBox::Recent->recent( 
       url => $self->{url} || CPANURL,
       event => 'recent',
+      rss => $self->{rss},
   );
   return;
 }

@@ -32,6 +32,7 @@ minismokebox - a small lightweight SmokeBox
    --url URI	     - The URI of a CPAN mirror to use, default is CPAN Testers FTP;
    --home DIR       - Set a fake HOME directory for spawned smokers to use;
    --nolog          - Set to disable stdout/stderr logging in jobs;
+   --rss            - set to use the rss recent file instead of the default;
 
 =head1 DESCRIPTION
 
@@ -156,6 +157,11 @@ CPAN author whose CPAN ID begins with C<BI> and a list of the Phalanx 100 distri
 Explicitly tell C<minismokebox> to smoke the recent uploads to CPAN. This is the default action if none of the following
 actions are given. 
 
+=item C<--rss>
+
+Enabling this option will tell C<minismokebox> to use the C<modules/01modules.mtime.rss> file instead of the default
+C<RECENT> file to discover recent CPAN uploads.
+
 =item C<--reverse>
 
 If specified C<minismokebox> will smoke recent uploads in reverse order.
@@ -223,6 +229,13 @@ with the smoke testing.
 Set to a true value to explicitly tell C<minismokebox> to smoke recent uploads to CPAN.
 
   recent=1
+
+=item C<rss>
+
+Enabling this option will tell C<minismokebox> to use the C<modules/01modules.mtime.rss> file instead of the default
+C<RECENT> file to discover recent CPAN uploads.
+
+  rss=1
 
 =item C<perl>
 

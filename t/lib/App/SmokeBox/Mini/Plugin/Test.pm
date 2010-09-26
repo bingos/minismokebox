@@ -13,7 +13,7 @@ sub init {
   ok( $config, 'Got called with a config' );
   POE::Session->create(
      package_states => [
-        $package => [qw(_start sbox_smoke sbox_stop)],
+        $package => [qw(_start sbox_perl_info sbox_smoke sbox_stop)],
      ],
   );
 }
@@ -21,6 +21,14 @@ sub init {
 sub _start {
   my ($kernel,$session) = @_[KERNEL,SESSION];
   $kernel->refcount_increment( $session->ID, __PACKAGE__ );
+  return;
+}
+
+sub sbox_perl_info {
+  my ($version,$archname) = @_[ARG0,ARG1];
+  ok( $version, 'Got version info' );
+  ok( $archname, 'Got archname info' );
+  diag("v$version $archname\n");
   return;
 }
 

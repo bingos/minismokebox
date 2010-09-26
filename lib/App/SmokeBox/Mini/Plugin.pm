@@ -48,6 +48,14 @@ session ID which it will use to send the following events.
 
 =over
 
+=item C<sbox_perl_info>
+
+Sent when C<App::SmokeBox::Mini> has determined the C<perl> version and archname of the 
+given C<perl> executable.
+
+  ARG0, will be the perl version
+  ARG1, will be the archname
+
 =item C<sbox_smoke>
 
 Sent on process completion with a hashref as C<ARG0>:

@@ -20,6 +20,7 @@ use POE::Component::SmokeBox::Smoker;
 use POE::Component::SmokeBox::Job;
 use POE::Component::SmokeBox::Dists;
 use POE::Component::SmokeBox::Recent;
+use App::SmokeBox::PerlVersion;
 
 use vars qw($VERSION);
 
@@ -150,7 +151,7 @@ sub run {
   $self->{session_id} = POE::Session->create(
 	object_states => [
 	   $self => { recent => '_submission', dists => '_submission', },
-	   $self => [qw(_start _stop _check _child _indices _smoke _search)],
+	   $self => [qw(_start _stop _check _child _indices _smoke _search _perl_version)],
 	],
 	heap => $self,
   )->ID();
@@ -222,6 +223,22 @@ sub _check {
      my $backend = $self->{backend} || 'CPANPLUS::YACSmoke';
      warn "The specified perl '$self->{perl}' does not have backend '$backend' installed, aborting\n";
      return;
+  }
+  App::SmokeBox::PerlVersion->version(
+    perl => $self->{perl},
+    event => '_perl_version',
+    session => $_[SESSION]->postback( '_perl_version' ),
+  );
+  return;
+}
+
+sub _perl_version {
+  my ($kernel,$self,$args) = @_[KERNEL,OBJECT,ARG1];
+  my $data = shift @{$args};
+  my ($version,$archname) = @{ $data }{qw(version archname)};
+  if ( $version and $archname ) {
+    print "Perl Version: $version\nArchitecture: $archname\n";
+    $kernel->post( $_, 'sbox_perl_info', $version, $archname ) for @{ $self->{_sessions} };
   }
   if ( $self->{indices} ) {
      $kernel->post( $self->{sbox}->session_id(), 'submit', event => '_indices', job => 

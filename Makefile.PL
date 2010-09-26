@@ -22,6 +22,7 @@ requires 'POE' => 1.005;
 requires 'POE::Component::SmokeBox' => 0.36;
 requires 'POE::Component::SmokeBox::Recent' => 1.12;
 requires 'POE::Component::SmokeBox::Dists' => 0.08;
+requires 'App::SmokeBox::PerlVersion' => 0.06;
 requires 'Module::Pluggable' => 0;
 requires 'Module::Load' => 0;
 if ( !( can_use('Event') and can_use('POE::XS::Queue::Array') ) and can_cc() ) {

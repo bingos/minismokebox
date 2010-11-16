@@ -1,6 +1,9 @@
 minismokebox
 ============
 
+0.36 Tue Nov 16 22:10:38 GMT 2010
+  - Fix an incredibly fatal flaw in the epoch time logic.
+
 0.34 Tue Nov 16 12:56:01 GMT 2010
   - Write a timestamp file on finish, consult it on startup,
     only smoke dists uploaded since then.

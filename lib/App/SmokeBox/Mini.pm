@@ -62,6 +62,22 @@ sub _read_config {
   return @config;
 }
 
+sub _read_ts_data {
+  my $timestamp = File::Spec->catfile( _smokebox_dir(), '.smokebox', 'timestamp' );
+  my %data;
+  if ( -e $timestamp ) {
+    open my $fh, '<', $timestamp or die "Could not open 'timestamp': $!\n";
+    while (<$fh>) {
+      chomp;
+      my ($prefix,$ts) = $_ =~ /^(\[.+?\])([\d\.]+)$/;
+      $data{ $prefix } = $ts;
+    }
+    close $fh;
+  }
+  return %data if wantarray;
+  return \%data;
+}
+
 sub _get_jobs_from_file {
   my $jobs = shift || return;
   unless ( open JOBS, "< $jobs" ) {
@@ -138,6 +154,8 @@ sub run {
   }
 
   my $self = bless \%config, $package;
+
+  $self->{_tsdata} = _read_ts_data();
 
   $self->{sbox} = POE::Component::SmokeBox->spawn( 
 	smokers => [
@@ -216,8 +234,12 @@ sub _stop {
   my $smokebox_dir = File::Spec->catdir( _smokebox_dir(), '.smokebox' );
   mkpath( $smokebox_dir ) unless -d $smokebox_dir;
   {
+    $self->{_tsdata}->{ $self->{_tsprefix} } = $self->{stats}->{started};
+    use Data::Dumper;
+    $Data::Dumper::Indent=1;
+    warn( Dumper( $self->{_tsdata} ) );
     open my $ts, '>', File::Spec->catfile( $smokebox_dir, 'timestamp' ) or die "Could not open 'timestamp': $!\n";
-    print {$ts} $self->{stats}->{started}, "\n";
+    print {$ts} join('', $_, $self->{_tsdata}->{$_} ), "\n" for sort keys %{ $self->{_tsdata} };
     close $ts;
   }
   return;
@@ -246,6 +268,9 @@ sub _perl_version {
   if ( $version and $archname ) {
     print "Perl Version: $version\nArchitecture: $archname\n";
     $kernel->post( $_, 'sbox_perl_info', $version, $archname ) for @{ $self->{_sessions} };
+    $self->{_perlinfo} = [ $version, $archname ];
+    $self->{_tsprefix} = "[$version$archname]";
+    $self->{_epoch} = $self->{_tsdata}->{ $self->{_tsprefix} };
   }
   if ( $self->{indices} ) {
      $kernel->post( $self->{sbox}->session_id(), 'submit', event => '_indices', job => 
@@ -288,21 +313,11 @@ sub _search {
      }
   }
   if ( $self->{recent} ) {
-    my $epoch;
-    { 
-      my $timestamp = File::Spec->catfile( _smokebox_dir(), '.smokebox', 'timestamp' );
-      if ( -e $timestamp ) {
-        open my $fh, '<', $timestamp or die "Could not open 'timestamp': $!\n";
-        $epoch = do { local $/; <$fh>; };
-        chomp $epoch if $epoch;
-        close $fh;
-      }
-    }
     POE::Component::SmokeBox::Recent->recent( 
         url => $self->{url} || CPANURL,
         event => 'recent',
         rss => $self->{rss},
-        ( defined $epoch ? ( epoch => $epoch ) : () ),
+        ( defined $self->{_epoch} ? ( epoch => $self->{_epoch} ) : () ),
     );
   }
   if ( $self->{package} ) {
@@ -329,21 +344,11 @@ sub _search {
     );
   }
   return if !$self->{recent} and ( $self->{package} or $self->{author} or $self->{phalanx} or ( $self->{jobs} and ref $self->{jobs} eq 'ARRAY' ) );
-  my $epoch;
-  { 
-    my $timestamp = File::Spec->catfile( _smokebox_dir(), '.smokebox', 'timestamp' );
-    if ( -e $timestamp ) {
-      open my $fh, '<', $timestamp or die "Could not open 'timestamp': $!\n";
-      $epoch = do { local $/; <$fh>; };
-      chomp $epoch if $epoch;
-      close $fh;
-    }
-  }
   POE::Component::SmokeBox::Recent->recent( 
       url => $self->{url} || CPANURL,
       event => 'recent',
       rss => $self->{rss},
-      ( defined $epoch ? ( epoch => $epoch ) : () ),
+      ( defined $self->{_epoch} ? ( epoch => $self->{_epoch} ) : () ),
   );
   return;
 }

@@ -10,6 +10,7 @@ use Test::POE::Server::TCP;
 use HTTP::Date qw( time2str );
 use HTTP::Response;
 use YAML::Syck;
+use Config;
 
 $ENV{PERL5_SMOKEBOX_DIR} = cwd();
 my $smokebox_dir = File::Spec->catdir( App::SmokeBox::Mini::_smokebox_dir(), '.smokebox' );
@@ -27,7 +28,7 @@ EOF
 close CONFIG;
 
 open TIMESTAMP, '> ' . File::Spec->catfile( $smokebox_dir, 'timestamp' ) or die "$!\n";
-print TIMESTAMP ( time() - ( 60 * 30 ) ), "\n";
+print TIMESTAMP join( '', '[', $Config::Config{version}, $Config::Config{archname}, ']', ( time() - ( 60 * 30 ) ) ), "\n";
 close TIMESTAMP;
 
 my @data = qw(

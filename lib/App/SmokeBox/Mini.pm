@@ -26,7 +26,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.32';
+$VERSION = '0.34';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 

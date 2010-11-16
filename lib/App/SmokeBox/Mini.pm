@@ -235,9 +235,6 @@ sub _stop {
   mkpath( $smokebox_dir ) unless -d $smokebox_dir;
   {
     $self->{_tsdata}->{ $self->{_tsprefix} } = $self->{stats}->{started};
-    use Data::Dumper;
-    $Data::Dumper::Indent=1;
-    warn( Dumper( $self->{_tsdata} ) );
     open my $ts, '>', File::Spec->catfile( $smokebox_dir, 'timestamp' ) or die "Could not open 'timestamp': $!\n";
     print {$ts} join('', $_, $self->{_tsdata}->{$_} ), "\n" for sort keys %{ $self->{_tsdata} };
     close $ts;

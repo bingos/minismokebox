@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use Test::More tests => 11;
 use File::Spec;
+use File::Path qw[rmtree];
 use Cwd;
 use POE qw(Wheel::Run Filter::HTTP::Parser);
 use App::SmokeBox::Mini;
@@ -12,6 +13,7 @@ use HTTP::Response;
 $ENV{PERL5_SMOKEBOX_DIR} = cwd();
 my $smokebox_dir = File::Spec->catdir( App::SmokeBox::Mini::_smokebox_dir(), '.smokebox' );
 
+rmtree $smokebox_dir;
 mkdir $smokebox_dir unless -d $smokebox_dir;
 die "$!\n" unless -d $smokebox_dir;
 

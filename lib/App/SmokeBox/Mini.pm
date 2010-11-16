@@ -213,6 +213,13 @@ sub _stop {
   print "minismokebox avg run: \t", $stats[3], "\n";
   print "minismokebox min run: \t", $stats[4], "\n";
   print "minismokebox max run: \t", $stats[5], "\n";
+  my $smokebox_dir = File::Spec->catdir( _smokebox_dir(), '.smokebox' );
+  mkpath( $smokebox_dir ) unless -d $smokebox_dir;
+  {
+    open my $ts, '>', File::Spec->catfile( $smokebox_dir, 'timestamp' ) or die "Could not open 'timestamp': $!\n";
+    print {$ts} $self->{stats}->{started}, "\n";
+    close $ts;
+  }
   return;
 }
 
@@ -281,10 +288,21 @@ sub _search {
      }
   }
   if ( $self->{recent} ) {
+    my $epoch;
+    { 
+      my $timestamp = File::Spec->catfile( _smokebox_dir(), '.smokebox', 'timestamp' );
+      if ( -e $timestamp ) {
+        open my $fh, '<', $timestamp or die "Could not open 'timestamp': $!\n";
+        $epoch = do { local $/; <$fh>; };
+        chomp $epoch if $epoch;
+        close $fh;
+      }
+    }
     POE::Component::SmokeBox::Recent->recent( 
         url => $self->{url} || CPANURL,
         event => 'recent',
         rss => $self->{rss},
+        ( defined $epoch ? ( epoch => $epoch ) : () ),
     );
   }
   if ( $self->{package} ) {
@@ -311,10 +329,21 @@ sub _search {
     );
   }
   return if !$self->{recent} and ( $self->{package} or $self->{author} or $self->{phalanx} or ( $self->{jobs} and ref $self->{jobs} eq 'ARRAY' ) );
+  my $epoch;
+  { 
+    my $timestamp = File::Spec->catfile( _smokebox_dir(), '.smokebox', 'timestamp' );
+    if ( -e $timestamp ) {
+      open my $fh, '<', $timestamp or die "Could not open 'timestamp': $!\n";
+      $epoch = do { local $/; <$fh>; };
+      chomp $epoch if $epoch;
+      close $fh;
+    }
+  }
   POE::Component::SmokeBox::Recent->recent( 
       url => $self->{url} || CPANURL,
       event => 'recent',
       rss => $self->{rss},
+      ( defined $epoch ? ( epoch => $epoch ) : () ),
   );
   return;
 }

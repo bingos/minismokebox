@@ -2,12 +2,14 @@ use strict;
 use warnings;
 use Test::More tests => 1;
 use App::SmokeBox::Mini;
+use File::Path qw[rmtree];
 use File::Spec;
 use Cwd;
 
 $ENV{PERL5_SMOKEBOX_DIR} = cwd();
 my $smokebox_dir = File::Spec->catdir( App::SmokeBox::Mini::_smokebox_dir(), '.smokebox' );
 
+rmtree($smokebox_dir);
 mkdir $smokebox_dir unless -d $smokebox_dir;
 die "$!\n" unless -d $smokebox_dir;
 

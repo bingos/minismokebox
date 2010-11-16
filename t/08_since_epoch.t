@@ -9,6 +9,7 @@ use App::SmokeBox::Mini;
 use Test::POE::Server::TCP;
 use HTTP::Date qw( time2str );
 use HTTP::Response;
+use YAML::Syck;
 
 $ENV{PERL5_SMOKEBOX_DIR} = cwd();
 my $smokebox_dir = File::Spec->catdir( App::SmokeBox::Mini::_smokebox_dir(), '.smokebox' );
@@ -25,36 +26,27 @@ backend=Test::SmokeBox::Mini
 EOF
 close CONFIG;
 
+open TIMESTAMP, '> ' . File::Spec->catfile( $smokebox_dir, 'timestamp' ) or die "$!\n";
+print TIMESTAMP ( time() - ( 60 * 30 ) ), "\n";
+close TIMESTAMP;
+
 my @data = qw(
-MIRRORING.FROM
-RECENT
-RECENT.html
-authors/00whois.html
-authors/00whois.xml
-authors/01mailrc.txt.gz
-authors/02STAMP
-authors/RECENT-1M.yaml
-authors/RECENT-1Q.yaml
-authors/RECENT-1W.yaml
-authors/RECENT-1d.yaml
-authors/RECENT-1h.yaml
-authors/RECENT-6h.yaml
-authors/id/A/AA/AAU/MRIM/CHECKSUMS
-authors/id/A/AA/AAU/MRIM/Net-MRIM-1.10.meta
-authors/id/A/AA/AAU/MRIM/Net-MRIM-1.10.tar.gz
-authors/id/A/AD/ADAMK/CHECKSUMS
-authors/id/A/AD/ADAMK/ORLite-1.17.meta
-authors/id/A/AD/ADAMK/ORLite-1.17.readme
-authors/id/A/AD/ADAMK/ORLite-1.17.tar.gz
-authors/id/A/AD/ADAMK/Test-NeedsDisplay-1.06.meta
-authors/id/A/AD/ADAMK/Test-NeedsDisplay-1.06.readme
-authors/id/A/AD/ADAMK/Test-NeedsDisplay-1.06.tar.gz
-authors/id/A/AD/ADAMK/Test-NeedsDisplay-1.07.meta
-authors/id/A/AD/ADAMK/Test-NeedsDisplay-1.07.readme
-authors/id/A/AD/ADAMK/Test-NeedsDisplay-1.07.tar.gz
-authors/id/A/AD/ADAMK/YAML-Tiny-1.36.meta
-authors/id/A/AD/ADAMK/YAML-Tiny-1.36.readme
-authors/id/A/AD/ADAMK/YAML-Tiny-1.36.tar.gz
+id/A/AA/AAU/MRIM/CHECKSUMS
+id/A/AA/AAU/MRIM/Net-MRIM-1.10.meta
+id/A/AA/AAU/MRIM/Net-MRIM-1.10.tar.gz
+id/A/AD/ADAMK/CHECKSUMS
+id/A/AD/ADAMK/ORLite-1.17.meta
+id/A/AD/ADAMK/ORLite-1.17.readme
+id/A/AD/ADAMK/ORLite-1.17.tar.gz
+id/A/AD/ADAMK/Test-NeedsDisplay-1.06.meta
+id/A/AD/ADAMK/Test-NeedsDisplay-1.06.readme
+id/A/AD/ADAMK/Test-NeedsDisplay-1.06.tar.gz
+id/A/AD/ADAMK/Test-NeedsDisplay-1.07.meta
+id/A/AD/ADAMK/Test-NeedsDisplay-1.07.readme
+id/A/AD/ADAMK/Test-NeedsDisplay-1.07.tar.gz
+id/A/AD/ADAMK/YAML-Tiny-1.36.meta
+id/A/AD/ADAMK/YAML-Tiny-1.36.readme
+id/A/AD/ADAMK/YAML-Tiny-1.36.tar.gz
 );
 
 my @tests = qw(
@@ -64,6 +56,8 @@ A/AD/ADAMK/Test-NeedsDisplay-1.06.tar.gz
 A/AD/ADAMK/Test-NeedsDisplay-1.07.tar.gz
 A/AD/ADAMK/YAML-Tiny-1.36.tar.gz
 );
+
+my $yaml = YAML::Syck::Dump( { recent => [ map { { path => $_, type => 'new', epoch => (time() - (60*20)) } } @data ] } );
 
 POE::Session->create(
    package_states => [
@@ -89,7 +83,7 @@ sub testd_registered {
   my ($kernel,$heap) = @_[KERNEL,HEAP];
   $heap->{wheel} = POE::Wheel::Run->new(
     Program => $^X,
-    ProgramArgs => [ 'bin/minismokebox', '--backend', 'Test::SmokeBox::Mini', '--url', $heap->{url}, '--reverse' ],
+    ProgramArgs => [ 'bin/minismokebox', '--backend', 'Test::SmokeBox::Mini', '--url', $heap->{url} ],
     StdoutEvent => '_stdout',    # Received data from the child's STDOUT.
     StderrEvent => '_stderr',    # Received data from the child's STDERR.
     ErrorEvent  => '_oops',          # An I/O error occurred.
@@ -107,11 +101,11 @@ sub testd_client_input {
   pass('Got a recent file request');
   my $resp = HTTP::Response->new( 200 );
   $resp->protocol('HTTP/1.1');
-  $resp->header('Content-Type', 'text/plain');
+  $resp->header('Content-Type', 'application/octet-stream');
   $resp->header('Date', time2str(time));
   $resp->header('Server', 'Test-POE-Server-TCP/' . $Test::POE::Server::TCP::VERSION);
   $resp->header('Connection', 'close');
-  $resp->content( join "\n", @data );
+  $resp->content( $yaml );
   use bytes;
   $resp->header('Content-Length', length $resp->content);
   $heap->{testd}->send_to_client( $id, $resp );

@@ -1,6 +1,14 @@
 minismokebox
 ============
 
+0.34 Tue Nov 16 12:56:01 GMT 2010
+  - Write a timestamp file on finish, consult it on startup,
+    only smoke dists uploaded since then.
+
+0.32 Mon Sep 27 11:40:36 BST 2010
+  - Detect the version and archname of the given perl executable. 
+    Pass this information on to loaded plugins.
+
 0.30 Thu Sep  2 15:44:20 BST 2010
   - Added --rss option
 

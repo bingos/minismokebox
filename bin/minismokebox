@@ -33,6 +33,7 @@ minismokebox - a small lightweight SmokeBox
    --home DIR       - Set a fake HOME directory for spawned smokers to use;
    --nolog          - Set to disable stdout/stderr logging in jobs;
    --rss            - set to use the rss recent file instead of the default;
+   --noepoch        - set to disable only smoking the most recent uploads;
 
 =head1 DESCRIPTION
 
@@ -162,6 +163,11 @@ actions are given.
 Enabling this option will tell C<minismokebox> to use the C<modules/01modules.mtime.rss> file instead of the default
 C<RECENT> file to discover recent CPAN uploads.
 
+=item C<--noepoch>
+
+Enabling this option will disable the use of C<RECENT-1x.yaml> files to determine the very most recent uploads
+to smoke.
+
 =item C<--reverse>
 
 If specified C<minismokebox> will smoke recent uploads in reverse order.
@@ -236,6 +242,13 @@ Enabling this option will tell C<minismokebox> to use the C<modules/01modules.mt
 C<RECENT> file to discover recent CPAN uploads.
 
   rss=1
+
+=item C<noepoch>
+
+Enabling this option will disable the use of C<RECENT-1x.yaml> files to determine the very most recent uploads
+to smoke.
+
+  noepoch=1
 
 =item C<perl>
 

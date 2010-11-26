@@ -124,6 +124,7 @@ sub run {
     "reverse"   => \$config{reverse},
     "home=s"    => \$config{home},
     "nolog"     => \$config{nolog},
+    "noepoch"   => \$config{noepoch},
     "rss"       => \$config{rss},
   ) or pod2usage(2);
 
@@ -231,6 +232,7 @@ sub _stop {
   print "minismokebox avg run: \t", $stats[3], "\n";
   print "minismokebox min run: \t", $stats[4], "\n";
   print "minismokebox max run: \t", $stats[5], "\n";
+  return if $self->{noepoch};
   my $smokebox_dir = File::Spec->catdir( _smokebox_dir(), '.smokebox' );
   mkpath( $smokebox_dir ) unless -d $smokebox_dir;
   {

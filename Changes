@@ -1,6 +1,9 @@
 minismokebox
 ============
 
+  - Add noepoch option to explicitly disable the most recent
+    uploads smoking based on when the smoker was last started.
+
 0.36 Tue Nov 16 22:10:38 GMT 2010
   - Fix an incredibly fatal flaw in the epoch time logic.
 

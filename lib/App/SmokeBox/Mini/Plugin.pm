@@ -3,7 +3,7 @@ package App::SmokeBox::Mini::Plugin;
 use strict;
 use warnings;
 
-our $VERSION = '0.36';
+our $VERSION = '0.38';
 
 qq[Smokin' plugins];
 

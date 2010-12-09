@@ -27,6 +27,7 @@ minismokebox - a small lightweight SmokeBox
    --backend BACKEND - specify a SmokeBox backend to use;
    --author PATTERN  - specify a CPAN ID to search for modules to smoke;
    --package PATTERN - specify a search pattern to match against distributions;
+   --random          - specify a random selection of dists to smoke;
    --phalanx	     - smoke the Phalanx 100 distributions;
    --reverse	     - specify that RECENT uploads are smoked in reverse order;
    --url URI	     - The URI of a CPAN mirror to use, default is CPAN Testers FTP;
@@ -202,6 +203,10 @@ applied to the CPAN ID of CPAN authors. eg.
 
 Specify that you want to smoke the Phalanx '100' distributions, L<http://qa.perl.org/phalanx>.
 
+=item C<--random>
+
+Specify that you want to smoke a random selection of 100 distributions from the CPAN indexes.
+
 =back
 
 =head1 CONFIGURATION FILE
@@ -235,6 +240,12 @@ with the smoke testing.
 Set to a true value to explicitly tell C<minismokebox> to smoke recent uploads to CPAN.
 
   recent=1
+
+=item C<random>
+
+Set to a true value to specify that you want to smoke a random selection of 100 distributions from the CPAN indexes.
+
+  random=1
 
 =item C<rss>
 

@@ -1,6 +1,10 @@
 minismokebox
 ============
 
+0.40 Thu Dec  9 19:59:42 GMT 2010
+  - Finally get rid of the USE_SIGCHLD redefined warnings
+  - Add 'random' option to smoke random CPAN dists
+
 0.38 Fri Nov 26 12:48:47 GMT 2010
   - Add noepoch option to explicitly disable the most recent
     uploads smoking based on when the smoker was last started.

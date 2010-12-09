@@ -12,7 +12,11 @@ use Time::Duration qw(duration_exact);
 use Module::Pluggable search_path => ['App::SmokeBox::Mini::Plugin'];
 use Module::Load;
 BEGIN {
-  sub POE::Kernel::USE_SIGCHLD () { 1 }
+  no strict 'refs';
+  no warnings;
+  *{ 'POE::Kernel::USE_SIGCHLD' } = sub () { 1 };
+}
+BEGIN {
   use POE;
 }
 use POE::Component::SmokeBox;
@@ -26,7 +30,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.38';
+$VERSION = '0.40';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -56,7 +60,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug perl indices recent backend url home nolog rss);
+		              qw(debug perl indices recent backend url home nolog rss random);
   }
   push @config, 'sections', $Config if scalar keys %{ $Config };
   return @config;
@@ -126,6 +130,7 @@ sub run {
     "nolog"     => \$config{nolog},
     "noepoch"   => \$config{noepoch},
     "rss"       => \$config{rss},
+    "random"    => \$config{random},
   ) or pod2usage(2);
 
   _display_version() if $version;
@@ -143,7 +148,7 @@ sub run {
 
   print "Running minismokebox with options:\n";
   printf("%-20s %s\n", $_, $config{$_}) 
-	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home nolog);
+	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home nolog random);
 
   if ( $config{home} and ! -e $config{home} ) {
      mkpath( $config{home} ) or die "Could not create '$config{home}': $!\n";
@@ -338,6 +343,13 @@ sub _search {
   if ( $self->{phalanx} ) {
     warn "Doing a phalanx search, this may take a little while\n";
     POE::Component::SmokeBox::Dists->phalanx(
+        event => 'dists',
+        url => $self->{url} || CPANURL,
+    );
+  }
+  if ( $self->{random} ) {
+    warn "Doing a random search, this may take a little while\n";
+    POE::Component::SmokeBox::Dists->random(
         event => 'dists',
         url => $self->{url} || CPANURL,
     );

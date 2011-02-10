@@ -60,7 +60,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug perl indices recent backend url home nolog rss random);
+		              qw(debug perl indices recent backend url home nolog rss random noepoch);
   }
   push @config, 'sections', $Config if scalar keys %{ $Config };
   return @config;
@@ -148,7 +148,7 @@ sub run {
 
   print "Running minismokebox with options:\n";
   printf("%-20s %s\n", $_, $config{$_}) 
-	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home nolog random);
+	for grep { defined $config{$_} } qw(debug indices perl jobs backend author package phalanx reverse url home nolog random noepoch);
 
   if ( $config{home} and ! -e $config{home} ) {
      mkpath( $config{home} ) or die "Could not create '$config{home}': $!\n";
@@ -274,7 +274,7 @@ sub _perl_version {
     $kernel->post( $_, 'sbox_perl_info', $version, $archname ) for @{ $self->{_sessions} };
     $self->{_perlinfo} = [ $version, $archname ];
     $self->{_tsprefix} = "[$version$archname]";
-    $self->{_epoch} = $self->{_tsdata}->{ $self->{_tsprefix} };
+    $self->{_epoch} = $self->{_tsdata}->{ $self->{_tsprefix} } unless $self->{noepoch};
   }
   if ( $self->{indices} ) {
      $kernel->post( $self->{sbox}->session_id(), 'submit', event => '_indices', job => 

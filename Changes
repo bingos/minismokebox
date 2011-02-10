@@ -1,6 +1,10 @@
 minismokebox
 ============
 
+0.42 Thu Feb 10 21:52:04 GMT 2011
+  - Make noepoch option actually do what it is supposed to do
+    and work from the configuration file
+
 0.40 Thu Dec  9 19:59:42 GMT 2010
   - Finally get rid of the USE_SIGCHLD redefined warnings
   - Add 'random' option to smoke random CPAN dists

@@ -10,7 +10,7 @@ auto_license holder => 'Chris Williams';
 perl_version '5.006';
 build_requires 'Test::More' => 0.47;
 build_requires 'Test::POE::Server::TCP' => 0.12;
-build_requires 'POE::Filter::HTTP::Parser' => 0.08;
+build_requires 'POE::Filter::HTTP::Parser' => 1.06;
 build_requires 'HTTP::Response' => 0;
 build_requires 'HTTP::Date' => 0;
 requires 'Config::Tiny' => 2.12;
@@ -20,7 +20,7 @@ requires 'Pod::Usage' => '1.00';
 requires 'Time::Duration' => 1.06;
 requires 'POE' => 1.005;
 requires 'POE::Component::SmokeBox' => 0.36;
-requires 'POE::Component::SmokeBox::Recent' => 1.28;
+requires 'POE::Component::SmokeBox::Recent' => 1.30;
 requires 'POE::Component::SmokeBox::Dists' => 1.04;
 requires 'App::SmokeBox::PerlVersion' => 0.06;
 requires 'Module::Pluggable' => 0;
@@ -32,7 +32,7 @@ print <<NOTICE;
 Hey,
 
 You appear to have a working compiler. I can include 'Event'
-and 'POE::XS::Queue::Array' which will make POE work a lot 
+and 'POE::XS::Queue::Array' which will make POE work a lot
 faster.
 
 --------------------------------------------------------------

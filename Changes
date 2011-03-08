@@ -1,6 +1,9 @@
 minismokebox
 ============
 
+0.44 Tue Mar  8 11:34:14 GMT 2011
+  - Update required version of POE::Filter::HTTP::Parser
+
 0.42 Thu Feb 10 21:52:04 GMT 2011
   - Make noepoch option actually do what it is supposed to do
     and work from the configuration file

@@ -74,7 +74,9 @@ sub _read_ts_data {
     while (<$fh>) {
       chomp;
       my ($prefix,$ts) = $_ =~ /^(\[.+?\])([\d\.]+)$/;
-      $data{ $prefix } = $ts;
+      if ( $prefix and $ts ) {
+        $data{ $prefix } = $ts;
+      }
     }
     close $fh;
   }

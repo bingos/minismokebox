@@ -1,6 +1,10 @@
 minismokebox
 ============
 
+0.46 Wed May 25 22:07:28 BST 2011
+  - Added configuration options to pass custom env vars to the
+    Backend process
+
 0.44 Tue Mar  8 11:34:14 GMT 2011
   - Update required version of POE::Filter::HTTP::Parser
 

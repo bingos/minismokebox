@@ -49,7 +49,7 @@ tested, the system C<perl> for instance.
 The above command will run C<minismokebox> which will obtain a list of recently uploaded distributions
 to CPAN and then proceed to C<smoke> each of these distributions against the indicated C<perl>.
 
-C<minismokebox> supports a number of different CPAN Tester frameworks ( in L<POE::Component::SmokeBox> 
+C<minismokebox> supports a number of different CPAN Tester frameworks ( in L<POE::Component::SmokeBox>
 parlance a C<backend> ), currently, L<CPANPLUS::YACSmoke>, L<CPAN::Reporter> and L<CPAN::YACSmoke>.
 
    /usr/bin/minismokebox --perl /home/cpan/sandbox/perl-5.10.0/bin/perl # uses default 'CPANPLUS::YACSmoke'
@@ -59,7 +59,7 @@ parlance a C<backend> ), currently, L<CPANPLUS::YACSmoke>, L<CPAN::Reporter> and
    /usr/bin/minismokebox --perl /home/cpan/sandbox/perl-5.10.0/bin/perl --backend CPAN::YACSmoke
 
 C<minismokebox> will C<check> that the selected backend exists in the indicated C<perl> before proceeding
-with the C<smoke> phase. This is very simple check and does not test whether the smoke environment is 
+with the C<smoke> phase. This is very simple check and does not test whether the smoke environment is
 properly configured to send test reports, etc. Consult the applicable documentation for instructions on
 how to configure the testing environment. ( See the links below in L</"SEE ALSO"> ).
 
@@ -75,7 +75,7 @@ Here are some tips to mitigate the risks:
 =item Use a C<sandbox> account
 
 Don't run smoke tests as C<root> or other priviledged user. Create a separate user account to smoke test
-under. For the even more paranoid you can give the C<HOME> directory for this user account a separate 
+under. For the even more paranoid you can give the C<HOME> directory for this user account a separate
 filesystem.
 
 =item Use a virtualised system
@@ -91,7 +91,7 @@ environments.
 
 =item Monitor your C<TEMP> file area
 
-Keep an eye on the C</tmp> directory, a lot of test-suites leave droppings behind. 
+Keep an eye on the C</tmp> directory, a lot of test-suites leave droppings behind.
 
 =back
 
@@ -129,7 +129,7 @@ Indicates that C<minismokebox> should reindex the particular backend before proc
 
 =item C<--url URI>
 
-The URI of a CPAN Mirror that C<minismokebox> will use to obtain the recent uploads from or perform C<package>, 
+The URI of a CPAN Mirror that C<minismokebox> will use to obtain the recent uploads from or perform C<package>,
 C<author> and C<phalanx> searches against. For consistency this should really match the CPAN Mirror configured in
 the applicable backend you are using.
 
@@ -157,7 +157,7 @@ CPAN author whose CPAN ID begins with C<BI> and a list of the Phalanx 100 distri
 =item C<--recent>
 
 Explicitly tell C<minismokebox> to smoke the recent uploads to CPAN. This is the default action if none of the following
-actions are given. 
+actions are given.
 
 =item C<--rss>
 
@@ -190,7 +190,7 @@ applied to the package or distribution name plus version number ( the so called 
   --package '0.01'  # find all distributions that are version 0.01
   --package '_\d+$' # find all development releases
 
-=item C<--author PATTERN> 
+=item C<--author PATTERN>
 
 Specify a string representing an author search to find distributions to smoke. The pattern is a regular expression and is
 applied to the CPAN ID of CPAN authors. eg.
@@ -230,7 +230,7 @@ Set to a true value to turn on all output from the L<POE::Component::SmokeBox::B
 
 =item C<indices>
 
-Set to a true value to indicate that C<minismokebox> should reindex the particular backend before proceeding 
+Set to a true value to indicate that C<minismokebox> should reindex the particular backend before proceeding
 with the smoke testing.
 
   indices=1
@@ -267,7 +267,7 @@ Specify the path to the C<perl> executable to use for smoke testing.
 
   perl=/home/cpan/rel/perl-5.10.0/bin/perl
 
-=item C<backend> 
+=item C<backend>
 
 Specify the L<POE::Component::SmokeBox::Backend> to use for smoke testing
 
@@ -275,7 +275,7 @@ Specify the L<POE::Component::SmokeBox::Backend> to use for smoke testing
 
 =item C<url>
 
-The URI of a CPAN Mirror that C<minismokebox> will use to obtain the recent uploads from or perform C<package>, 
+The URI of a CPAN Mirror that C<minismokebox> will use to obtain the recent uploads from or perform C<package>,
 C<author> and C<phalanx> searches against. For consistency this should really match the CPAN Mirror configured in
 the applicable backend you are using.
 

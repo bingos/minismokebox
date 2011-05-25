@@ -12,7 +12,7 @@ Supports multiple backends, including:
 Installation:
 =============
 
-The minimum version of perl supported is 5.6. This does not preclude CPAN testing of 
+The minimum version of perl supported is 5.6. This does not preclude CPAN testing of
 perls less than this, as the testing framework and the testing targets are two distinct
 environments.
 
@@ -33,7 +33,7 @@ The following modules are required:
 	POE::Component::SmokeBox::Recent => 1.00;
 	POE::Component::SmokeBox::Dists => 0.08;
 
-The recommended method of installation as always is to use either CPAN or CPANPLUS 
+The recommended method of installation as always is to use either CPAN or CPANPLUS
 so that the dependencies are automagically dealt with for you and you have the option
 of sending test reports during installation >:)
 

@@ -24,7 +24,7 @@ minismokebox
     only smoke dists uploaded since then.
 
 0.32 Mon Sep 27 11:40:36 BST 2010
-  - Detect the version and archname of the given perl executable. 
+  - Detect the version and archname of the given perl executable.
     Pass this information on to loaded plugins.
 
 0.30 Thu Sep  2 15:44:20 BST 2010
@@ -42,7 +42,7 @@ minismokebox
 0.21_01  Tue Nov 24 21:57:59 GMT 2009
   - Implemented plugin system
 
-0.20  Sun Nov  8 14:51:02 GMT 2009 
+0.20  Sun Nov  8 14:51:02 GMT 2009
   - Changes to Makefile.PL
   - Added 'home' option to change HOME env var for spawned
     processes.
@@ -52,11 +52,11 @@ minismokebox
 	- Added repository META.
 
 0.16	Sun Feb 22 21:32:38 GMT 2009
-	- Specify the POE::Loop::Event dependency explicitly 
+	- Specify the POE::Loop::Event dependency explicitly
 	  if the user wants Event.
 
 0.14	Fri Feb  6 12:27:53 GMT 2009
-	- Fixed refcount leaks. 
+	- Fixed refcount leaks.
 	- Updated dependencies to fixed versions.
 
 0.12	Mon Feb  2 22:12:15 GMT 2009
@@ -67,7 +67,7 @@ minismokebox
 	  don't set it, so we must. *sigh*
 
 0.08	Thu Jan 29 21:16:38 GMT 2009
-	- added --reverse option 
+	- added --reverse option
 	- Improved tests
 	- Refined Makefile.PL
 

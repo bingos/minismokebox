@@ -11,7 +11,7 @@ A/AD/ADAMK/Test-NeedsDisplay-1.07.tar.gz
 A/AD/ADAMK/YAML-Tiny-1.36.tar.gz
 );
 
-open JOBS, '> jobs.txt' or die "$!\n"; 
+open JOBS, '> jobs.txt' or die "$!\n";
 print JOBS $_, "\n" for @tests;
 close JOBS;
 

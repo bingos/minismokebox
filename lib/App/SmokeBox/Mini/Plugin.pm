@@ -15,7 +15,7 @@ App::SmokeBox::Mini::Plugin - minismokebox plugins
 
 =head1 DESCRIPTION
 
-This document describes the App::SmokeBox::Mini::Plugin system for 
+This document describes the App::SmokeBox::Mini::Plugin system for
 L<App::SmokeBox::Mini> and L<minismokebox>.
 
 Plugins are a mechanism for providing additional functionality to
@@ -26,7 +26,7 @@ L<POE::Session>.
 
 =head1 INITIALISATION
 
-The plugin constructor is C<init>. L<App::SmokeBox::Mini> uses 
+The plugin constructor is C<init>. L<App::SmokeBox::Mini> uses
 L<Module::Pluggable> to find plugins beneath the App::SmokeBox::Mini::Plugin
 namespace and will attempt to call C<init> on each plugin class that it finds.
 
@@ -41,7 +41,7 @@ If no appropriate configuration exists, then C<init> must return C<undef>.
 If appropriate configuration does exist, then the plugin may start a L<POE::Session>.
 
 L<App::SmokeBox::Mini> will watch for a C<_child> event indicating that it has gained
-a plugin child session. It will detach this child after making a note of the child's 
+a plugin child session. It will detach this child after making a note of the child's
 session ID which it will use to send the following events.
 
 =head1 EVENTS
@@ -50,7 +50,7 @@ session ID which it will use to send the following events.
 
 =item C<sbox_perl_info>
 
-Sent when C<App::SmokeBox::Mini> has determined the C<perl> version and archname of the 
+Sent when C<App::SmokeBox::Mini> has determined the C<perl> version and archname of the
 given C<perl> executable.
 
   ARG0, will be the perl version
@@ -83,7 +83,7 @@ Each result is a hashref:
 
 =item C<sbox_stop>
 
-Sent when the smokebox is terminating. Your plugin session should terminate after receiving this 
+Sent when the smokebox is terminating. Your plugin session should terminate after receiving this
 event. The following data will be passed:
 
   ARG0, the start time of the smoke process in epoch time;

@@ -11,14 +11,7 @@ use Getopt::Long;
 use Time::Duration qw(duration_exact);
 use Module::Pluggable search_path => ['App::SmokeBox::Mini::Plugin'];
 use Module::Load;
-BEGIN {
-  no strict 'refs';
-  no warnings;
-  *{ 'POE::Kernel::USE_SIGCHLD' } = sub () { 1 };
-}
-BEGIN {
-  use POE;
-}
+use POE;
 use POE::Component::SmokeBox;
 use POE::Component::SmokeBox::Smoker;
 use POE::Component::SmokeBox::Job;
@@ -165,11 +158,14 @@ sub run {
 
   $self->{_tsdata} = _read_ts_data();
 
-  $self->{sbox} = POE::Component::SmokeBox->spawn( 
+  my $env = delete $self->{sections}->{ENVIRONMENT} || { };
+  $env->{HOME} = $self->{home} if $self->{home};
+
+  $self->{sbox} = POE::Component::SmokeBox->spawn(
 	smokers => [
 	   POE::Component::SmokeBox::Smoker->new(
 		perl => $self->{perl},
-    ( $self->{home} ? ( env => { HOME => $self->{home} } ) : () ),
+    ( scalar keys %{ $env } ? ( env => $env ) : () ),
 	   ),
 	],
   );

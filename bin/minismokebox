@@ -17,7 +17,7 @@ minismokebox - a small lightweight SmokeBox
  minismokebox [options]
 
  Options:
-   --debug 	     - display all the output from tests as they are run;
+   --debug	     - display all the output from tests as they are run;
    --help	     - Display program usage;
    --version	     - Display program version;
    --perl PERL	     - specify the perl executable to use for testing;
@@ -39,7 +39,7 @@ minismokebox - a small lightweight SmokeBox
 =head1 DESCRIPTION
 
 C<minismokebox> is a lightweight version of SmokeBox that performs CPAN testing on a single
-C<perl> installation. 
+C<perl> installation.
 
 It is usually installed into a separate C<perl> installation than the C<perl> which is being
 tested, the system C<perl> for instance.
@@ -286,6 +286,14 @@ the applicable backend you are using.
 The path to a directory that will become the C<HOME> environment variable in spawned smoke processes. It will be
 created if it does not exist.
 
+=item C<ENVIRONMENT>
+
+This is C<section> within the configuration file. Any key/values specified will be passed as environment
+variables to the process that is created by L<POE::Component::SmokeBox::Backend>.
+
+  [ENVIRONMENT]
+  PERL5LIB=/some/random/directory/path:/oh/and/another
+
 =back
 
 =head1 ENVIRONMENT
@@ -294,6 +302,18 @@ C<minismokebox> uses the C<.smokebox> directory to locate the configuration file
 
 This is usually located in the current user's home directory. Setting the environment variable C<PERL5_SMOKEBOX_DIR> will
 effect where the C<.smokebox> directory is located.
+
+L<POE::Component::SmokeBox::Backend> will C<santify> the environment of the smoker process of various variables
+using L<Env::Sanctify>:
+
+      '^POE_',
+      '^PERL5_SMOKEBOX',
+      '^HARNESS_',
+      '^(PERL5LIB|TAP_VERSION|TEST_VERBOSE)$',
+      '^AUTHOR_TESTING$',
+      '^PERL_TEST',
+
+See L</"CONFIGURATION FILE"> for a way of propogating environment variables to the smoker process.
 
 =head1 KUDOS
 

@@ -12,6 +12,7 @@ use HTTP::Response;
 
 $ENV{PERL5_SMOKEBOX_DIR} = cwd();
 my $smokebox_dir = File::Spec->catdir( App::SmokeBox::Mini::_smokebox_dir(), '.smokebox' );
+my $testlib = File::Spec->catdir( cwd(), 't', 'lib' );
 
 rmtree $smokebox_dir;
 mkdir $smokebox_dir unless -d $smokebox_dir;
@@ -24,7 +25,7 @@ indices=1
 backend=Test::SmokeBox::Mini
 
 [ENVIRONMENT]
-PERL5LIB=/hello/hello/hello/what:/is/all/this:/then
+PERL5LIB=$testlib
 EOF
 close CONFIG;
 

@@ -13,7 +13,7 @@ sub _data {
   {
 	check => [ '-e', 1 ],
 	index => [ '-e', 1 ],
-	smoke => [ '-e', '$|=1; if ( $ENV{PERL5LIB} ) { print $ENV{PERL5LIB}, qq{\n}; } else { my $module = shift; print $module, qq{\n}; } sleep 5; exit 0;' ],
+	smoke => [ '-e', '$|=1; if ( $ENV{PERL5LIB} ) { require App::SmokeBox::Mini::Plugin::Test; } else { my $module = shift; print $module, qq{\n}; } sleep 5; exit 0;' ],
   };
   return;
 }

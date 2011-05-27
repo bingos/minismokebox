@@ -41,4 +41,5 @@ if ( can_cc() ) {
 clean_files '.smokebox jobs.txt';
 auto_provides;
 githubmeta;
+makemaker_args(dist => { PREOP => "$^X ./tools/git-log.pl > ./Changes" });
 WriteAll();

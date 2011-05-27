@@ -5,7 +5,7 @@ use warnings;
 use base qw(POE::Component::SmokeBox::Backend::Base);
 use vars qw($VERSION);
 
-$VERSION = '0.46';
+$VERSION = '0.48';
 
 sub _data {
   my $self = shift;

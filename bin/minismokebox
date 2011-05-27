@@ -35,6 +35,7 @@ minismokebox - a small lightweight SmokeBox
    --nolog          - Set to disable stdout/stderr logging in jobs;
    --rss            - set to use the rss recent file instead of the default;
    --noepoch        - set to disable only smoking the most recent uploads;
+   --perlenv        - set to enable PERL5LIB being passed to smoker process;
 
 =head1 DESCRIPTION
 
@@ -169,6 +170,12 @@ C<RECENT> file to discover recent CPAN uploads.
 Enabling this option will disable the use of C<RECENT-1x.yaml> files to determine the very most recent uploads
 to smoke.
 
+=item C<--perlenv>
+
+Normally C<minismokebox> ( via L<POE::Component::SmokeBox::Backend> ) will C<sanctify> the smoker process'
+environment variables to remove various C<perl> related variables. Enabling this option will pass C<PERL5LIB>
+environment variable to the smoker process if it is defined. This could have weird side-effects, use with caution.
+
 =item C<--reverse>
 
 If specified C<minismokebox> will smoke recent uploads in reverse order.
@@ -261,6 +268,14 @@ to smoke.
 
   noepoch=1
 
+=item C<perlenv>
+
+Normally C<minismokebox> ( via L<POE::Component::SmokeBox::Backend> ) will C<sanctify> the smoker process'
+environment variables to remove various C<perl> related variables. Enabling this option will pass C<PERL5LIB>
+environment variable to the smoker process if it is defined. This could have weird side-effects, use with caution.
+
+  perlenv=1
+
 =item C<perl>
 
 Specify the path to the C<perl> executable to use for smoke testing.
@@ -315,6 +330,9 @@ using L<Env::Sanctify>:
 
 See L</"CONFIGURATION FILE"> for a way of propogating environment variables to the smoker process.
 
+This behaviour can also be overriden for the C<PERL5LIB> variable only by using the C<--perlenv> or C<perlenv>
+configuration file option. See above for details.
+
 =head1 KUDOS
 
 Thanks go to Ricardo SIGNES for L<CPAN::Mini> which inspired the design of this script/module.
@@ -331,11 +349,11 @@ This module may be used, modified, and distributed under the same terms as Perl 
 
 =head1 SEE ALSO
 
-L<http://www.cpantesters.org/> 		- CPAN Testers: Index
+L<http://www.cpantesters.org/> - CPAN Testers: Index
 
-L<http://wiki.cpantesters.org/> 	- CPAN Testers Wiki
+L<http://wiki.cpantesters.org/>	- CPAN Testers Wiki
 
-L<http://stats.cpantesters.org/>	- CPAN Testers Statistics
+L<http://stats.cpantesters.org/> - CPAN Testers Statistics
 
 L<http://lists.cpan.org/showlist.cgi?name=cpan-testers-discuss> - CPAN Testers Discussion Mailing List
 

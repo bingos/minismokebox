@@ -35,3 +35,4 @@ t/10_environment.t
 t/99_pod.t
 t/99_pod_coverage.t
 t/lib/App/SmokeBox/Mini/Plugin/Test.pm
+tools/git-log.pl

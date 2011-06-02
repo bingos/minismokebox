@@ -11,9 +11,9 @@ use Getopt::Long;
 use Time::Duration qw(duration_exact);
 use Module::Pluggable search_path => ['App::SmokeBox::Mini::Plugin'];
 use Module::Load;
-use if ( $^O eq 'linux' ), "POE::Kernel" => { loop => 'POE::XS::Loop::EPoll' };
-use if ( $^O !~ /^(linux|MSWin32)$/ ), "POE::Kernel" => { loop => 'POE::XS::Loop::Poll' };
-use if ( $^O eq 'MSWin32' ), "POE::Kernel" => { loop => 'POE::Loop::Event' };
+use if ( $^O eq 'linux' ), 'POE::Kernel', { loop => 'POE::XS::Loop::EPoll' };
+use if ( $^O !~ /^(?:linux|MSWin32|darwin)$/ ), 'POE::Kernel', { loop => 'POE::XS::Loop::Poll' };
+use if ( scalar grep { $^O eq $_ } qw(MSWin32 darwin) ), 'POE::Kernel', { loop => 'POE::Loop::Event' };
 use POE;
 use POE::Component::SmokeBox;
 use POE::Component::SmokeBox::Smoker;
@@ -26,7 +26,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.52';
+$VERSION = '0.54';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 

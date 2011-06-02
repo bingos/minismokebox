@@ -1,7 +1,6 @@
 #!perl
 use strict;
 use warnings;
-BEGIN { eval "use Event;"; }
 use App::SmokeBox::Mini;
 $|=1; # Make STDOUT hot
 App::SmokeBox::Mini->run();

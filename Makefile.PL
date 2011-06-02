@@ -30,7 +30,9 @@ if ( can_cc() ) {
   if ( $^O eq 'linux' ) {
     requires 'POE::XS::Loop::EPoll' => 1.001;
   }
-  elsif ( $^O eq 'MSWin32' ) {
+  # Problem with POE::XS::Loop::Poll on MacOSX use Event
+  # [rt.cpan.org #68608]
+  elsif ( $^O =~ /^(MSWin32|darwin)$/ ) {
     requires 'Event' => 0;
     requires 'POE::Loop::Event' => 0;
   }

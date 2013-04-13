@@ -13,6 +13,7 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
+lib/minismokebox.pm
 lib/App/SmokeBox/Mini.pm
 lib/App/SmokeBox/Mini/Plugin.pm
 lib/POE/Component/SmokeBox/Backend/Test/SmokeBox/Mini.pm

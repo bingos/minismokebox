@@ -13,6 +13,7 @@ build_requires 'Test::POE::Server::TCP' => 0.12;
 build_requires 'POE::Filter::HTTP::Parser' => 1.06;
 build_requires 'HTTP::Response' => 0;
 build_requires 'HTTP::Date' => 0;
+requires 'unless' => 0.02;
 requires 'Config::Tiny' => 2.12;
 requires 'File::Spec' => 0;
 requires 'File::Path' => 0;

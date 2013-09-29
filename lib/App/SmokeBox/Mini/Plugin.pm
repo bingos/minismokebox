@@ -3,7 +3,7 @@ package App::SmokeBox::Mini::Plugin;
 use strict;
 use warnings;
 
-our $VERSION = '0.56';
+our $VERSION = '0.58';
 
 qq[Smokin' plugins];
 
@@ -50,11 +50,12 @@ session ID which it will use to send the following events.
 
 =item C<sbox_perl_info>
 
-Sent when C<App::SmokeBox::Mini> has determined the C<perl> version and archname of the
-given C<perl> executable.
+Sent when C<App::SmokeBox::Mini> has determined the C<perl> version, archname and OS version
+of the given C<perl> executable.
 
   ARG0, will be the perl version
   ARG1, will be the archname
+  ARG2, will be the OS version
 
 =item C<sbox_smoke>
 

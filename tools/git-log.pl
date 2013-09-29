@@ -91,7 +91,7 @@ push @tags, { 'time' => '9999-99-99 99:99:99 +0000', 'tag' => 'HEAD' };
 		# Don't display the tag if there's nothing under it.
 		next unless @commit;
 
-		my $tag_line = "$tags[$i]{time} $tags[$i]{tag}";
+		my $tag_line = "$tags[$i]{tag} $tags[$i]{time}";
 		print(
 			("=" x length($tag_line)), "\n",
 			$tag_line, "\n",

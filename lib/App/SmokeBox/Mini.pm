@@ -26,7 +26,7 @@ use vars qw($VERSION);
 
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.56';
+$VERSION = '0.58';
 
 $ENV{PERL5_MINISMOKEBOX} = $VERSION;
 
@@ -279,10 +279,10 @@ sub _check {
 sub _perl_version {
   my ($kernel,$self,$args) = @_[KERNEL,OBJECT,ARG1];
   my $data = shift @{$args};
-  my ($version,$archname) = @{ $data }{qw(version archname)};
-  if ( $version and $archname ) {
-    print "Perl Version: $version\nArchitecture: $archname\n";
-    $kernel->post( $_, 'sbox_perl_info', $version, $archname ) for @{ $self->{_sessions} };
+  my ($version,$archname,$osvers) = @{ $data }{qw(version archname osvers)};
+  if ( $version and $archname and $osvers ) {
+    print "Perl Version: $version\nArchitecture: $archname\nOS Version: $osvers\n";
+    $kernel->post( $_, 'sbox_perl_info', $version, $archname, $osvers ) for @{ $self->{_sessions} };
     $self->{_perlinfo} = [ $version, $archname ];
     $self->{_tsprefix} = "[$version$archname]";
     $self->{_epoch} = $self->{_tsdata}->{ $self->{_tsprefix} } unless $self->{noepoch};

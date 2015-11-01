@@ -53,7 +53,7 @@ The above command will run C<minismokebox> which will obtain a list of recently 
 to CPAN and then proceed to C<smoke> each of these distributions against the indicated C<perl>.
 
 C<minismokebox> supports a number of different CPAN Tester frameworks ( in L<POE::Component::SmokeBox>
-parlance a C<backend> ), currently, L<CPANPLUS::YACSmoke>, L<CPAN::Reporter> and L<CPAN::YACSmoke>.
+parlance a C<backend> ), currently, L<CPANPLUS::YACSmoke> and L<CPAN::Reporter>.
 
    /usr/bin/minismokebox --perl /home/cpan/sandbox/perl-5.10.0/bin/perl # uses default 'CPANPLUS::YACSmoke'
 
@@ -366,8 +366,6 @@ L<CPANPLUS::YACSmoke>
 L<CPAN::Reporter>
 
 L<CPAN::Reporter::Smoker>
-
-L<CPAN::YACSmoke>
 
 L<POE::Component::SmokeBox>
 

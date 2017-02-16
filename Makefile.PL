@@ -1,8 +1,4 @@
-BEGIN {
-    ### chdir to the makefile.pl dir
-    use FindBin;
-    use lib $FindBin::Bin;
-}
+use if ! ( grep { m!^\.$! } @INC ), qw[lib .];
 use strict;
 use inc::Module::Install;
 name 'minismokebox';

@@ -1,4 +1,4 @@
-use if ! ( grep { m!^\.$! } @INC ), qw[lib .];
+use if ! ( grep { $_ eq '.' } @INC ), qw[lib .];
 use strict;
 use inc::Module::Install;
 name 'minismokebox';

@@ -1,17 +1,13 @@
 package App::SmokeBox::Mini::Plugin;
 
+#ABSTRACT: minismokebox plugins
+
 use strict;
 use warnings;
 
-our $VERSION = '0.64';
-
 qq[Smokin' plugins];
 
-__END__
-
-=head1 NAME
-
-App::SmokeBox::Mini::Plugin - minismokebox plugins
+=pod
 
 =head1 DESCRIPTION
 
@@ -97,17 +93,5 @@ event. The following data will be passed:
   ARG7, the maximum job runtime in seconds;
 
 =back
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
-
-=head1 SEE ALSO
 
 =cut

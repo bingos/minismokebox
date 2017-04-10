@@ -1,4 +1,5 @@
 #!perl
+# PODNAME: minismokebox
 use strict;
 use warnings;
 use App::SmokeBox::Mini;

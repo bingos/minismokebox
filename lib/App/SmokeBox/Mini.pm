@@ -1,5 +1,7 @@
 package App::SmokeBox::Mini;
 
+#ABSTRACT: the guts of the minismokebox command
+
 use strict;
 use warnings;
 use Pod::Usage;
@@ -22,13 +24,9 @@ use POE::Component::SmokeBox::Dists;
 use POE::Component::SmokeBox::Recent;
 use App::SmokeBox::PerlVersion;
 
-use vars qw($VERSION);
-
 use constant CPANURL => 'ftp://cpan.cpantesters.org/CPAN/';
 
-$VERSION = '0.64';
-
-$ENV{PERL5_MINISMOKEBOX} = $VERSION;
+$ENV{PERL5_MINISMOKEBOX} = $App::SmokeBox::Mini::VERSION;
 
 sub _smokebox_dir {
   return $ENV{PERL5_SMOKEBOX_DIR}
@@ -96,7 +94,7 @@ sub _get_jobs_from_file {
 }
 
 sub _display_version {
-  print "minismokebox version ", $VERSION,
+  print "minismokebox version ", $App::SmokeBox::Mini::VERSION,
     ", powered by POE::Component::SmokeBox ", POE::Component::SmokeBox->VERSION, "\n\n";
   print <<EOF;
 Copyright (C) 2011 Chris 'BinGOs' Williams
@@ -418,11 +416,8 @@ sub _smoke {
 }
 
 'smoke it!';
-__END__
 
-=head1 NAME
-
-App::SmokeBox::Mini - the guts of the minismokebox command
+=pod
 
 =head1 SYNOPSIS
 
@@ -436,15 +431,5 @@ App::SmokeBox::Mini - the guts of the minismokebox command
 =head2 run
 
 This method is called by L<minismokebox> to do all the work.
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =cut

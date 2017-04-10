@@ -1,18 +1,13 @@
 package minismokebox;
 
+#ABSTRACT: a small lightweight SmokeBox
+
 use strict;
 use warnings;
-use vars qw[$VERSION];
-
-$VERSION = '0.64';
 
 1;
 
-__END__
-
-=head1 NAME
-
-minismokebox - a small lightweight SmokeBox
+=pod
 
 =head1 SYNOPSIS
 
@@ -338,16 +333,6 @@ configuration file option. See above for details.
 =head1 KUDOS
 
 Thanks go to Ricardo SIGNES for L<CPAN::Mini> which inspired the design of this script/module.
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =head1 SEE ALSO
 
